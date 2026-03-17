@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  vigilai:
+    build: ./backend
+    ports: 
+      - "8000:8000"
+    environment:
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - JWT_SECRET=${JWT_SECRET:-super-secure-jwt-key}
+      - DATABASE_URL=sqlite:///./vigilai.db
+    volumes:
+      - ./backend:/app
+      - ./frontend/dist:/frontend/dist
+    # The frontend is built locally and mounted to /frontend/dist so the backend serves it
